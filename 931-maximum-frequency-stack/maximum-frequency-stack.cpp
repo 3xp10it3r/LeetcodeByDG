@@ -1,7 +1,7 @@
 class FreqStack {
 public:
     unordered_map<int,int> mp;
-    map<int, stack<int>> group;
+    unordered_map<int, stack<int>> group;
     int maxCnt;
 
     FreqStack() {

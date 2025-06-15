@@ -35,11 +35,11 @@ public:
                 int newJ = node.second + dy[k];
 
                 if(isValid(newI, newJ, n, m) && !vis[newI][newJ]) {
-                    if(dist[newI][newJ] > dist[node.first][node.second] + 1) {
+                    // if(dist[newI][newJ] > dist[node.first][node.second] + 1) {
                         q.push({newI, newJ});
                         vis[newI][newJ] = 1;
                         dist[newI][newJ] = dist[node.first][node.second] + 1;
-                    }
+                    // }
                 }
             }
         }

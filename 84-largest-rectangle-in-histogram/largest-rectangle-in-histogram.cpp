@@ -8,7 +8,7 @@ public:
 
         int i = 0;
 
-        while(i < heights.size()) {
+        for(int i = 0; i < heights.size(); i++) {
             while(!st.empty() && st.top() != -1 && heights[st.top()] >= heights[i]){
                 int curHeight = heights[st.top()];
                 st.pop();
@@ -16,7 +16,7 @@ public:
                 maxArea = max(maxArea, curHeight* (i - st.top() - 1));
             }
 
-            st.push(i++);
+            st.push(i);
         }
 
         while(st.top() != -1) {

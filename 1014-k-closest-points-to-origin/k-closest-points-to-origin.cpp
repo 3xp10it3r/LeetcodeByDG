@@ -1,29 +1,17 @@
 class Solution {
+private:
+    static int getDistance(vector<int>& v) {
+        return v[0] * v[0] + v[1] * v[1];
+    }
 public:
+    
+
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        vector<vector<int>> ans;
-        priority_queue<pair<int, vector<int>>> pq;
+        
+        sort(points.begin(), points.end(), [](vector<int>& a, vector<int>& b){
+            return getDistance(a) < getDistance(b);
+        });
 
-        int n = points.size();
-
-        for(int i = 0; i < n; i++) {
-            if(pq.size() > k) {
-                pq.pop();
-            }
-
-            int dist = (points[i][0] * points[i][0]) + (points[i][1] * points[i][1]);
-            pq.push({dist, points[i]});
-        }
-
-        if(pq.size() > k) {
-                pq.pop();
-        }
-
-        while(!pq.empty()) {
-            ans.push_back(pq.top().second);
-            pq.pop();
-        }
-
-        return ans;
+        return vector<vector<int>>(points.begin(), points.begin() + k);
     }
 };

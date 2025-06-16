@@ -3,42 +3,31 @@ public:
     int maxDistToClosest(vector<int>& seats) {
         int n = seats.size();
         
-        vector<int> lastLeftOneIndex(n, -1);
-        vector<int> lastRightOneIndex(n, -1);
-        
-        
+        int zeroCount = 0, ans = 0;
+
         for(int i = 0; i < n; i++) {
             if(seats[i] == 1) {
-                lastLeftOneIndex[i] = i;
-            } else if(i - 1 >= 0) {
-                lastLeftOneIndex[i] = lastLeftOneIndex[i-1];
+                zeroCount = 0;
+            } else {
+                zeroCount++;
+                ans = max(ans, (zeroCount + 1) / 2);
             }
         }
-        
-        for (int i = n - 1; i >= 0; i--) {
-            if (seats[i] == 1) {
-                lastRightOneIndex[i] = i;
-            } else if (i + 1 < n) {
-                lastRightOneIndex[i] = lastRightOneIndex[i + 1];
-            }
-        }
-        
-        int ans = 0;
-        
+
         for(int i = 0; i < n; i++) {
-            if(seats[i] == 0) {
-                int mn = 0;
-                if(lastLeftOneIndex[i] != -1) {
-                    mn = i - lastLeftOneIndex[i];
-                }
-                if(lastRightOneIndex[i] != -1) {
-                    mn = (mn != 0 ? min(lastRightOneIndex[i] - i, mn) : lastRightOneIndex[i] - i) ;
-                }
-                
-                ans = max(ans, mn);
-            } 
+            if(seats[i] == 1) {
+                ans = max(ans, i);
+                break;
+            }
         }
-        
+
+        for(int i = n-1; i >= 0; i--) {
+            if(seats[i] == 1) {
+                ans = max(ans, n - i - 1);
+                break;
+            }
+        }
+
         return ans;
     }
 };

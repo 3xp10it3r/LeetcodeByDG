@@ -32,7 +32,7 @@ public:
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < m; j++) {
                 if(i == 0 || j == 0 || i == n-1 || j == m - 1) {
-                    if(board[i][j] == 'O')
+                    if(board[i][j] == 'O' && !vis[i][j])
                         dfs(i, j, board, n, m);
                 }
             }

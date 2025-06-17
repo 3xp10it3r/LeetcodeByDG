@@ -36,7 +36,7 @@ public:
             }
         }
 
-        sort(ans.begin(), ans.end());
+        // sort(ans.begin(), ans.end());
         st.insert(ans);
     }
 

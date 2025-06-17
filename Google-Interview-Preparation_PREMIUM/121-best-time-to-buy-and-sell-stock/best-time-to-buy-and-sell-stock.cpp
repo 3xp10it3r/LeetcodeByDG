@@ -5,8 +5,8 @@ public:
         int mxProfit = 0;
 
         for(int i = 1; i < prices.size(); i++) {
-            minPrice = min(minPrice, prices[i]);
             mxProfit = max(mxProfit, prices[i] - minPrice);
+            minPrice = min(minPrice, prices[i]);
         }
 
         return mxProfit;

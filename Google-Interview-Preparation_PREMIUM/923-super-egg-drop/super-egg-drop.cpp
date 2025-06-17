@@ -13,31 +13,32 @@ public:
         int ans = 1e9;
 
         int low = 1, high = n;
-        int x1 = 1, x2 = n;
+        int res = n;
 
         while(low <= high) {
             int mid = low + (high - low) / 2;
             
-            int val1 = helper(n - mid, k);
-            int val2 = helper(mid - 1, k - 1);
+            int broken = helper(mid - 1, k - 1);     // egg breaks
+            int notBroken = helper(n - mid, k);      // egg doesn't break
+            int temp = 1 + max(broken, notBroken);
 
-            if(val1 >= val2) {
-                x1 = mid;
+            res = min(res, temp);
+
+            if(broken < notBroken) {
                 low = mid + 1;
             } else {
-                x2 = mid;
                 high = mid - 1;
             }
 
-            if(val1 == val2) {
-                break;
-            }
+            // if(val1 == val2) {
+            //     break;
+            // }
         }
 
-        int val1 = 1 + max(helper(x1 - 1, k - 1) , helper(n - x1, k));
-        int val2 = 1 + max(helper(x2 - 1, k - 1), helper(n - x2, k));
+        // int val1 = 1 + max(helper(x1 - 1, k - 1) , helper(n - x1, k));
+        // int val2 = 1 + max(helper(x2 - 1, k - 1), helper(n - x2, k));
 
-        return dp[n][k] = min(val1, val2);
+        return dp[n][k] = res;
     }
 
     int superEggDrop(int k, int n) {

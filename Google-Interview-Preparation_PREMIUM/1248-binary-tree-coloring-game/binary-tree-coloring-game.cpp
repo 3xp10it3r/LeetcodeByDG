@@ -13,9 +13,7 @@ class Solution {
 public:
     
     TreeNode* dfs(TreeNode* root, int x) {
-        if(!root) return nullptr;
-        
-        if(root->val == x) return root;
+        if(!root || root->val == x) return root;
         
         TreeNode* left = dfs(root->left, x);
         if(left != nullptr) return left;
@@ -24,13 +22,8 @@ public:
     }
     
     int getNodeCount(TreeNode* root) {
-        if(!root) return 0;
-        int cnt = 1;
-        
-        cnt += getNodeCount(root->left);
-        cnt += getNodeCount(root->right);
-        
-        return cnt;
+        if(!root) return 0;        
+        return 1 + getNodeCount(root->left) + getNodeCount(root->right);
     }
     
     bool btreeGameWinningMove(TreeNode* root, int n, int x) {

@@ -29,4 +29,9 @@ public:
 
         return dp[n];
     }
+
+    // TC -> O(n * n1/2)
+    // SC -> O(n);
+
+    // lagrange 4 sq theorem + legendre 3 sq theorem (4^k (8m + 7)) can solve it in O(n1/2);
 };

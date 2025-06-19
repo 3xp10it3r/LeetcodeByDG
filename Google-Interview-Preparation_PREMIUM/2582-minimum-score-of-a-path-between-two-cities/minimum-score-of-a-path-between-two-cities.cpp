@@ -25,7 +25,7 @@ public:
             graph[road[1]].push_back({road[0], road[2]});
         }
 
-        dfs(n, graph, vis);
+        dfs(1, graph, vis);
 
         return ans;
     }

@@ -5,7 +5,6 @@ public:
 
     void helper(int n, int open, int close) {
         if(open + close  ==  2 * n) {
-           
             ans.push_back(s);
             return;
         }

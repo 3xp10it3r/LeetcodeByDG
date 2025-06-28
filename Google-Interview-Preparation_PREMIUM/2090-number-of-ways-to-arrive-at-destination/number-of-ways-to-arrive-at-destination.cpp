@@ -27,10 +27,8 @@ public:
             long long wt = temp[0];
             pq.pop();
 
-            // if(vis[node]) continue;
-            // vis[node] = 1;
-
-            if (wt > dist[node]) continue;
+            if(vis[node]) continue;
+            vis[node] = 1;
 
             for(auto neighbour: graph[node]) {
 

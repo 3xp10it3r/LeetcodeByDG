@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int helper(int level, string& s, unordered_map<string, int>& mp, vector<int>& dp) {
+    int helper(int level, string& s, unordered_set<string>& mp, vector<int>& dp) {
         if(level >= s.size()) return 0;
 
         if(dp[level] != -1) return dp[level];
@@ -14,6 +14,7 @@ public:
 
             int count = ((mp.count(curStr)) ? 0: curStr.size()) 
                         + helper(i + 1, s, mp, dp); 
+           
             ans = min(ans, count);
         }
 
@@ -23,9 +24,9 @@ public:
     int minExtraChar(string s, vector<string>& dictionary) {
         vector<int> dp(s.size(), -1);
 
-        unordered_map<string, int> mp;
+        unordered_set<string> mp;
 
-        for(string &word: dictionary) mp[word]++;
+        for(string &word: dictionary) mp.insert(word);
 
         return helper(0, s, mp, dp);
     }

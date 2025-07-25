@@ -17,7 +17,7 @@ public:
             }
         }
 
-        if(ans == 0 && maxValNegative != -101) return maxValNegative;
+        if(ans == 0) return maxValNegative;
 
         return ans; 
     }

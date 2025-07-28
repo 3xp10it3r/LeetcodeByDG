@@ -4,17 +4,22 @@ public:
         
         int cnt = 0;
 
-        vector<int> v;
-        v.push_back(nums[0]);
+        // vector<int> v;
+        // v.push_back(nums[0]);
 
-        for(int i = 1; i < nums.size(); i++) {
-            if(v.back() == nums[i]) continue;
-            v.push_back(nums[i]);
-        }
+        // for(int i = 1; i < nums.size(); i++) {
+        //     if(v.back() == nums[i]) continue;
+        //     v.push_back(nums[i]);
+        // }
 
-        for(int i = 1; i < v.size() - 1; i++) {
-            if(v[i] > v[i-1] && v[i] > v[i+1]) cnt++;
-            if(v[i] < v[i-1] && v[i] < v[i+1]) cnt++;
+        int last = nums[0];
+
+        for(int i = 1; i < nums.size() - 1; i++) {
+            if(nums[i] == last || nums[i] == nums[i+1]) continue;
+            if(nums[i] > last && nums[i] > nums[i+1]) cnt++;
+            if(nums[i] < last && nums[i] < nums[i+1]) cnt++;
+
+            last = nums[i];
         }
 
         return cnt;

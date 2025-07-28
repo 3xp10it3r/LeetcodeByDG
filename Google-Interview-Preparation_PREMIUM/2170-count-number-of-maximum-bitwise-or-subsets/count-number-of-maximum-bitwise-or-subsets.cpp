@@ -1,30 +1,29 @@
 class Solution {
 public:
+    int ans;
+
+    void helper(int level, vector<int>& nums, int curOr, int n, int mxOr) {
+        if(level == n) {
+            if(curOr == mxOr) ans++;
+            return;
+        }
+
+        helper(level + 1, nums, curOr | nums[level], n, mxOr);
+        helper(level + 1, nums, curOr, n, mxOr);
+    }
+
     int countMaxOrSubsets(vector<int>& nums) {
+        int n = nums.size();
+
         int mxOr = 0;
 
         for(auto num : nums) {
             mxOr |= num;
         }
 
-        int ans = 0;
-
-        int n = nums.size();
-
-        int numberOfSubsets = (1 << n);
-
-        for(int mask = 0; mask < numberOfSubsets; mask++) {
-            int curOr = 0;
-            for(int i = 0; i < n; i++) {
-                if((mask >> i) & 1) {
-                    curOr |= nums[i];
-                }
-            }
-
-            if(curOr == mxOr) {
-                ans++;
-            }
-        } 
+        ans = 0;
+        
+        helper(0, nums, 0, n, mxOr);
 
         return ans;
     }

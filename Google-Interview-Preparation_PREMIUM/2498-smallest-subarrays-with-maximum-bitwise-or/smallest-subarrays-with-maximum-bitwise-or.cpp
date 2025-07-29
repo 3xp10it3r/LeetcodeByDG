@@ -8,11 +8,11 @@ public:
 
         for(int i = n - 1; i >= 0; i--) {
             int mx = i;
-            for(int j = 0; j < 31; j++) {
-                if(nums[i] & (1 << j)) {
-                    setBitsPos[j] = i;
+            for(int bit = 0; bit < 31; bit++) {
+                if(nums[i] & (1 << bit)) {
+                    setBitsPos[bit] = i;
                 } else {
-                    mx = max(mx, setBitsPos[j]);
+                    mx = max(mx, setBitsPos[bit]);
                 }
             }
 

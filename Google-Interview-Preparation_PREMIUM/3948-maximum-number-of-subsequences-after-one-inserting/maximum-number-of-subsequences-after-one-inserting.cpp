@@ -33,6 +33,6 @@ public:
             maxLT = max(1LL * countL[i] * suffixT, maxLT);
         }
 
-        return max({ans + maxLT, ansWithL, ansWithT, ans});
+        return max({ans + maxLT, ansWithL, ansWithT});
     }
 };

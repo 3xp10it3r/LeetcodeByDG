@@ -26,7 +26,6 @@ public:
         while(low <= high) {
             int mid = (low + high) / 2;
 
-            
             if(nums[mid] < nums[0]) {
                 peak = mid;
                 high = mid - 1;
@@ -34,8 +33,6 @@ public:
                 low = mid + 1;
             }
         }
-
-        cout << "peak" << peak << endl;
 
         int l = binary_search(nums, 0, peak - 1, target);
         int r = binary_search(nums, peak, n - 1, target);

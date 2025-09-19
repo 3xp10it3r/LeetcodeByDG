@@ -22,11 +22,10 @@ public:
         }
 
         int ans = 0;
-        int newRotten = 0;
 
         while(!q.empty()) {
             int sz = q.size();
-            int curRotten = newRotten;
+            int curFresh = cntFresh;
             for(int k = 0; k < sz; k++) {
                 pair<int,int> node = q.front();
                 q.pop();
@@ -38,15 +37,15 @@ public:
                     if(ni >= 0 && nj >= 0 && ni < n && nj < m && !visited[ni][nj] && grid[ni][nj] == 1) {
                         q.push({ni, nj});
                         visited[ni][nj] = 1;
-                        newRotten++;
+                        cntFresh--;
                     }
                 }
             }
-            if(newRotten - curRotten != 0)
+            if(cntFresh - curFresh != 0)
                 ans++;
         }
 
-        if(newRotten != cntFresh) return -1;
+        if(cntFresh != 0) return -1;
 
         return ans;
     }

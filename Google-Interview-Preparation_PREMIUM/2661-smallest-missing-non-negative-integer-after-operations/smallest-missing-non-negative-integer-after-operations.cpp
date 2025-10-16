@@ -6,7 +6,7 @@ public:
             mp[(num % value + value) % value]++;
         }
 
-        for(int i = 0; i <= 1e5; i++) {
+        for(int i = 0; i <= nums.size(); i++) {
             if(!mp[i % value])
                 return i;
             else mp[i % value]--;

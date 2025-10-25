@@ -1,17 +1,19 @@
 class Solution {
 public:
     int totalMoney(int n) {
-        int monday = 1;
-        int ans = 0;
+        int terms = n / 7;
+        int first = 28; //since 1+2+3+4+5+6+7
+        int last = 28 + (terms - 1) * 7; // since for each we are getting 7 more
 
-        while(n > 0) {
-            for(int day = 0; day < min(n, 7); day++) {
-                ans += monday + day;
-            }
-            n -= 7;
-            monday++;
+        int fullWeeksSum = terms * (first + last) / 2;
+
+        int remainingDaysSum = 0;
+        int monday = 1 + terms;
+
+        for(int day = 0; day < (n % 7); day++) {
+            remainingDaysSum += monday + day;
         }
 
-        return ans;
+        return fullWeeksSum + remainingDaysSum;
     }
 };

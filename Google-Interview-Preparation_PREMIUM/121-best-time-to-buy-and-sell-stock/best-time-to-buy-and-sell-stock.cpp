@@ -7,8 +7,7 @@ public:
 
         int n = prices.size();
         for(int i = 1; i < n; i++) {
-            if(prices[i] - mn > 0)
-                ans = max(ans, prices[i] - mn);
+            ans = max(ans, prices[i] - mn);
             
             mn = min(mn, prices[i]);
         }

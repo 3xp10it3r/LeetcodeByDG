@@ -28,6 +28,19 @@ public:
         }
     }
 
+
+    void dfs(int i, int j, vector<vector<int>>& visited, vector<vector<char>>& grid, int n, int m) {
+        visited[i][j] = 1;
+
+        for(int k = 0; k < 4; k++) {
+            int ni = i + dx[k];
+            int nj = j + dy[k];
+
+            if(!isValid(ni, nj, n, m) || visited[ni][nj] || grid[ni][nj] != '1') continue;
+            dfs(ni, nj, visited, grid, n, m);
+        }
+    }
+
     int numIslands(vector<vector<char>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
@@ -37,7 +50,7 @@ public:
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++) {
                 if(visited[i][j] == 0 && grid[i][j] == '1') {
-                    bfs(i, j, visited, grid, n, m);
+                    dfs(i, j, visited, grid, n, m);
                     ans++;
                 }
             }

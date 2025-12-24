@@ -1,21 +1,33 @@
 class Solution {
 public:
+    int calculateKadaneImpact(vector<int>& nums, int target, int k) {
+        int mx = 0, cur = 0;
+
+        for(auto num : nums) {
+            if(num == target) cur++;
+            if(num == k) cur--;
+            
+            if(cur < 0) cur = 0;
+
+            mx = max(mx, cur);
+        }
+
+        return mx;
+    }
+    
     int maxFrequency(vector<int>& nums, int k) {
-        int totalK = 0;
-        for (int i = 0; i < nums.size(); i++) {
-            if (nums[i] == k) totalK++;
+        unordered_map<int,int> mp;
+
+        for(auto num : nums) {
+            mp[num]++;
         }
-        int prefixCountK = 0;
-        int freq[100005]{};
-        int maxval[100005]{};
-        int res = 0;
-        for (int j = 0; j < nums.size(); j++) {
-            int n = nums[j];
-            maxval[n] = max(maxval[n], prefixCountK - freq[n]);
-            prefixCountK += (n == k) ? 1 : 0;
-            freq[n]++;
-            res = max(res, (totalK - prefixCountK) + maxval[n] + freq[n]);
+        
+        int maxFreq = 0;
+
+        for(const auto &[key, _]: mp) {
+            maxFreq = max(maxFreq, calculateKadaneImpact(nums, key, k));
         }
-        return res;
+
+        return mp[k] + maxFreq;
     }
 };

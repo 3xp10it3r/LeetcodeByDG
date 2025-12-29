@@ -1,52 +1,58 @@
 class Solution {
 public:
-    vector<int> dx = {0, 0, -1, 1};
-    vector<int> dy = {-1, 1, 0, 0};
+    const vector<int> dx = {-1, 1, 0, 0};
+    const vector<int> dy = {0, 0, -1, 1};
+
+    bool isValid(int i, int j, int n, int m) {
+        return (i >= 0 && i < n && j >= 0 && j < m);
+    }
 
     int orangesRotting(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-        queue<pair<int,int>> q;
-        vector<vector<int>> visited(n, vector<int>(m, 0));
 
-        int cntFresh = 0;
+        vector<vector<int>> visited(n, vector<int>(m, 0));
+        queue<pair<int,int>> q;
+
+        int freshCount = 0;
+
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < m; j++) {
-                if(grid[i][j] == 2) {
+                if(grid[i][j] == 2){
                     q.push({i, j});
                     visited[i][j] = 1;
                 }
-
-                if(grid[i][j] == 1) cntFresh++;
+                else if(grid[i][j] == 1) freshCount++;
             }
         }
 
-        int ans = 0;
+        int minutes = 0;
 
         while(!q.empty()) {
             int sz = q.size();
-            int curFresh = cntFresh;
-            for(int k = 0; k < sz; k++) {
-                pair<int,int> node = q.front();
+
+            bool anyRotten = false;
+            for(int i_ = 0; i_ < sz; i_++) {
+                pair<int,int> node = q.front(); 
                 q.pop();
 
                 for(int i = 0; i < 4; i++) {
-                    int ni = dx[i] + node.first;
-                    int nj = dy[i] + node.second;
+                    int ni = node.first + dx[i];
+                    int nj = node.second + dy[i];
 
-                    if(ni >= 0 && nj >= 0 && ni < n && nj < m && !visited[ni][nj] && grid[ni][nj] == 1) {
-                        q.push({ni, nj});
+                    if(isValid(ni, nj, n, m) && grid[ni][nj] == 1 && !visited[ni][nj]) {
                         visited[ni][nj] = 1;
-                        cntFresh--;
+                        q.push({ni, nj});
+                        anyRotten = true;
+                        freshCount--;
                     }
                 }
             }
-            if(cntFresh - curFresh != 0)
-                ans++;
+            if(anyRotten)
+                minutes++;
         }
 
-        if(cntFresh != 0) return -1;
-
-        return ans;
+        if(freshCount == 0) return minutes;
+        return -1;
     }
 };

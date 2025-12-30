@@ -1,11 +1,26 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        int mxProfit = 0;
-        for(int i = 1; i < prices.size(); i++) {
-            int profit = prices[i] - prices[i-1];
-            if(profit > 0) mxProfit += profit;
+    vector<vector<int>> dp;
+    int n;
+    int rec(int index, bool bought, vector<int>& prices) {
+        if(index >= n) return 0;
+
+        if(dp[index][bought] != -1) return dp[index][bought];
+
+        int profit = INT_MIN;
+
+        if(!bought) { //not bought, then buy or skip
+            profit = max(rec(index + 1, 0, prices), -prices[index] + rec(index + 1, true, prices));
+        } else { // hold or sell
+            profit = max(rec(index + 1, bought, prices), prices[index] + rec(index + 1, false, prices));
         }
-        return mxProfit;
+
+        return dp[index][bought] = profit;
+    }
+
+    int maxProfit(vector<int>& prices) {
+        n = prices.size();
+        dp = vector(n, vector<int>(2, -1));
+        return rec(0, false, prices);
     }
 };

@@ -10,7 +10,7 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoSortedLists(ListNode* l1, ListNode* l2) {
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         ListNode* dummy = new ListNode(0);
         ListNode* head = dummy;
 
@@ -33,15 +33,17 @@ public:
 
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         int n = lists.size();
+
         int interval = 1;
 
         while(interval < n) {
-            for(int i = 0; i < n - interval; i += interval * 2) {
-                lists[i] = mergeTwoSortedLists(lists[i], lists[i + interval]);
+            for(int i = 0 ; i < n - interval; i += interval * 2) {
+                lists[i] = mergeTwoLists(lists[i], lists[i + interval]);
             }
+
             interval *= 2;
         }
 
-        return n > 0 ? lists[0] : NULL;        
+        return n ? lists[0] : nullptr;
     }
 };

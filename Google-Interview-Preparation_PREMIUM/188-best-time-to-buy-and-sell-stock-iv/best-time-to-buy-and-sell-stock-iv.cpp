@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<vector<vector<int>>> dp;
+    // vector<vector<vector<int>>> dp;
     int n;
     // int k;
     // int rec(int index, bool bought, int txn, vector<int>& prices) {
@@ -23,27 +23,30 @@ public:
 
     int maxProfit(int k, vector<int>& prices) {
         n = prices.size();
-        dp = vector(n + 1, vector<vector<int>>(2, vector<int>(k + 1, 0)));
+        vector<vector<int>> curr(2, vector<int>(k + 1, 0));
+        vector<vector<int>> ahead(2, vector<int>(k + 1, 0));
+
         
         for(int i = n - 1; i >= 0; i--) {
             for(int b = 0; b <= 1; b++) {
                 for(int t = 0; t < k; t++) {
 
                     if(b == 0) {
-                        dp[i][0][t] = max(
-                            -prices[i] + dp[i+1][1][t],
-                            dp[i+1][b][t]
+                        curr[0][t] = max(
+                            -prices[i] + ahead[1][t],
+                            ahead[b][t]
                         );
                     } else {
-                        dp[i][1][t] = max(
-                            prices[i] + dp[i+1][0][t+1],
-                            dp[i+1][1][t]
+                        curr[1][t] = max(
+                            prices[i] + ahead[0][t+1],
+                            ahead[1][t]
                         );
                     }
                 }
             }
+            ahead = curr;
         }
 
-        return dp[0][0][0];
+        return curr[0][0];
     }
 };

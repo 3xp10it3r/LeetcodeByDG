@@ -1,27 +1,35 @@
 class Solution {
 public:
+    int dp[1001][1001];
     bool checkPalindrome(int i, int j, string& s) {
-        while(i <= j) {
-            if(s[i] == s[j]) i++, j--;
-            else return false;
-        }
-        return true;
+        if(i >= j) return dp[i][j] = true;
+
+        if(dp[i][j] != -1) return dp[i][j];
+
+        if(s[i] == s[j])
+            return dp[i][j] = checkPalindrome(i+1, j-1, s);
+        
+        return dp[i][j] = false;
     }
 
     string longestPalindrome(string s) {
         int n = s.size();
-        string ans = ""; int len = 0;
+
+        memset(dp, -1, sizeof(dp));
+
+        int mxLen = 0, startIndex = -1;
+
         for(int i = 0; i < n; i++) {
             for(int j = i; j < n; j++) {
                 if(checkPalindrome(i, j, s)) {
-                    if(len < j - i + 1) {
-                        ans = s.substr(i, j - i + 1);
-                        len = j - i + 1;
+                    if(mxLen < j - i + 1) {
+                        mxLen = j - i + 1;
+                        startIndex = i;
                     }
                 }
             }
         }
 
-        return ans;
+        return s.substr(startIndex, mxLen);
     }
 };

@@ -1,30 +1,28 @@
 class Solution {
 public:
-    int dp[100100][2][3];
+    vector<vector<vector<int>>> dp;
+    int n;
+    int rec(int index, bool bought, int txn, vector<int>& prices) {
+        if(index >= n || txn >= 2) return 0;
 
-    int rec(int level, int txn, int isBuy, vector<int>& prices, int n) {
-        if(level == n || txn == 0) {
-            return 0;
+        if(dp[index][bought][txn] != -1) return dp[index][bought][txn];
+
+        int profit = INT_MIN;
+
+        if(!bought) { //not bought, then buy or skip
+            profit = max(rec(index + 1, 0, txn, prices), 
+                         -prices[index] + rec(index + 1, true, txn, prices));
+        } else { // hold or sell
+            profit = max(rec(index + 1, bought, txn, prices), 
+                        prices[index] + rec(index + 1, false, txn + 1, prices));
         }
-        
-        if(dp[level][isBuy][txn] != -1) return dp[level][isBuy][txn];
 
-        int profit = 0;
-
-        if(isBuy) {
-            profit = max(-prices[level] + rec(level + 1, txn, 0, prices, n), rec(level + 1, txn, 1, prices, n));
-        } else {
-            profit = max(prices[level] + rec(level + 1, txn - 1, 1, prices, n), rec(level + 1, txn, 0, prices, n));
-        }
-
-        return dp[level][isBuy][txn] = profit;
+        return dp[index][bought][txn] = profit;
     }
 
     int maxProfit(vector<int>& prices) {
-        memset(dp, -1, sizeof(dp));
-        int n = prices.size();
-        if(!n) return 0;
-
-        return rec(0, 2, 1, prices, n);
+        n = prices.size();
+        dp = vector(n, vector<vector<int>>(2, vector<int>(3, -1)));
+        return rec(0, false, 0, prices);
     }
 };

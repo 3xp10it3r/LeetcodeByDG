@@ -31,7 +31,37 @@ public:
         n = s1.size();
         m = s2.size();
 
-        dp = vector(n+1, vector<int>(m + 1, -1));
-        return rec(0, 0, s1, s2);    
+        dp = vector(n+1, vector<int>(m + 1, 0));
+
+        dp[n][m] = 0;
+
+        for(int i = n; i >= 0; i--) {
+            for(int j = m; j >= 0; j--){
+                if(i == n && j == m) {
+                    dp[i][j] = 0;
+                    continue;
+                }
+
+                if(i == n && j < m) {
+                    dp[i][j] = getRemainingStringAscii(j, s2);
+                    continue;
+                }
+
+                if(i < n && j == m) { 
+                    dp[i][j] = getRemainingStringAscii(i, s1);
+                    continue;
+                }
+
+                if(s1[i] == s2[j]) {
+                    dp[i][j] = dp[i+1][j+1];
+                    continue;
+                }
+
+                dp[i][j] = min(s1[i] + dp[i+1][j], s2[j] + dp[i][j+1]);
+            }
+        }
+
+        return dp[0][0];
+        // return rec(0, 0, s1, s2);    
     }
 };

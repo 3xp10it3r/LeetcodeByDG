@@ -1,24 +1,24 @@
 class Solution {
 public:
-    // int n = 0;
+    int n = 0;
 
-    // vector<vector<int>> dp;
+    vector<vector<int>> dp;
 
-    // int rec(int i, int noOfWallsRemaining, vector<int>& cost, vector<int>& time) {
-    //     if(noOfWallsRemaining <= 0)
-    //         return 0;
+    int rec(int i, int noOfWallsRemaining, vector<int>& cost, vector<int>& time) {
+        if(noOfWallsRemaining <= 0)
+            return 0;
 
-    //     if(i == n)
-    //         return 1e9;
+        if(i == n)
+            return 1e9;
 
-    //     if(dp[i][noOfWallsRemaining] != -1) 
-    //         return dp[i][noOfWallsRemaining];
+        if(dp[i][noOfWallsRemaining] != -1) 
+            return dp[i][noOfWallsRemaining];
 
-    //     int take = cost[i] + rec(i+1, noOfWallsRemaining - (time[i] + 1), cost, time);
-    //     int notTake = rec(i+1, noOfWallsRemaining, cost, time);
+        int take = cost[i] + rec(i+1, noOfWallsRemaining - (time[i] + 1), cost, time);
+        int notTake = rec(i+1, noOfWallsRemaining, cost, time);
 
-    //     return dp[i][noOfWallsRemaining] = min(take, notTake);
-    // }
+        return dp[i][noOfWallsRemaining] = min(take, notTake);
+    }
 
     int paintWalls(vector<int>& cost, vector<int>& time) {
         int n = cost.size();
@@ -32,7 +32,7 @@ public:
                     dp[i][noOfWallsRemaining] = 1e9;
                     continue;
                 }
-                if(noOfWallsRemaining <= 0) {
+                if(noOfWallsRemaining == 0) {
                     dp[i][noOfWallsRemaining] = 0;
                     continue;
                 }

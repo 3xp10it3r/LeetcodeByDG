@@ -7,7 +7,7 @@ public:
 
         if(dp[i][j] != -1) return dp[i][j];
 
-        if(s[i]==s[j]){
+        if(s[i] == s[j]){
             return dp[i][j] = checkPalindrome(i+1, j-1, s);
         }
 

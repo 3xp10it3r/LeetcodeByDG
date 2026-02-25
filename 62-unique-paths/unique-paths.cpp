@@ -1,16 +1,23 @@
-#define ll long long
 class Solution {
 public:
-    ll nCr(ll n, ll r){
-        ll ans=1;
-        for(ll i=1; i<=r; i++){
-            ans = (ans*n--) / i;  
+    int dp[101][101];
+    int helper(int i, int j, int m, int n) {
+        if(i == m-1 && j == n-1) {
+            return 1;
         }
-        return ans;
-    }
 
+        if(i >= m || j >= n || i < 0 || j < 0) {
+            return 0;
+        }
+
+        if(dp[i][j] != -1) return dp[i][j];
+
+        int ans = helper(i+1, j, m, n) + helper(i, j+1, m, n);
+
+        return dp[i][j] = ans;
+    }
     int uniquePaths(int m, int n) {
-        m = m-1,n=n-1;
-        return nCr(m+n,  min(m,n) );
+        memset(dp, -1, sizeof(dp));
+        return helper(0, 0, m,n);
     }
 };

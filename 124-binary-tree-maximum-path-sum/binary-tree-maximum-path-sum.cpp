@@ -11,25 +11,21 @@
  */
 class Solution {
 public:
-    pair<int, int> dfs(TreeNode* root) {
-        if(!root) return {INT_MIN, 0};
 
-        auto l = dfs(root->left);
-        auto r = dfs(root->right);
-        int data = root->val;
+    int ans = INT_MIN;
 
-        int left = max(0, l.second);
-        int right = max(0, r.second);
+    int dfs(TreeNode* root) {
+        if(!root) return 0;
 
-        int newNodeVal = max(left + data, right + data);
-        int all = left + right + data;
+        auto left = max(0, dfs(root->left));
+        auto right = max(0, dfs(root->right));
 
-        return {
-            max({all, l.first, r.first}), 
-            newNodeVal
-        };
+        ans = max(ans, root->val + left + right);
+
+        return root->val + max(left, right);
     }
     int maxPathSum(TreeNode* root) {
-        return dfs(root).first;
+        dfs(root);
+        return ans;
     }
 };
